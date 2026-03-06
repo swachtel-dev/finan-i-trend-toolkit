@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trend Analysis Toolkit - FINAN I Unit 7</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #333; }
+        h1 { color: #1F4E79; border-bottom: 2px solid #1F4E79; padding-bottom: 8px; }
+        h2 { color: #2E75B6; margin-top: 30px; }
+        h3 { color: #404040; }
+        .formula-box { background: #F2F7FC; border-left: 4px solid #2E75B6; padding: 12px 16px; margin: 16px 0; font-family: 'Consolas', monospace; }
+        .tip { background: #FFF8E1; border-left: 4px solid #F9A825; padding: 12px 16px; margin: 16px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+        th { background: #2E75B6; color: white; padding: 10px 12px; text-align: left; }
+        td { border: 1px solid #ddd; padding: 8px 12px; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        footer { font-size: 0.9em; color: #555; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 12px; }
+        a { text-decoration: underline; }
+        .skip-link { position: absolute; top: -40px; left: 0; background: #1F4E79; color: #fff; padding: 8px 16px; z-index: 100; text-decoration: underline; }
+        .skip-link:focus { top: 0; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        :focus-visible { outline: 2px solid #2E75B6; outline-offset: 2px; }
+    </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<main id="main-content">
+
+<h1>Trend Analysis Toolkit</h1>
+
+<p>This resource covers the three analytical tools you will use in the Berkshire Hathaway exercises: year-over-year analysis, CAGR, and anomaly identification. It also explains chart types and how to create them in Excel.</p>
+
+<p>Financial trend analysis means identifying patterns in a company's data over time. Rather than looking at a single year's numbers in isolation, you compare multiple years to answer questions like: Is this company growing? Is it becoming more or less efficient? Are there warning signs? This resource covers the core techniques you will use in your workbook.</p>
+
+<section aria-label="Year-over-Year Growth">
+<h2>1. Year-over-Year (YoY) Growth</h2>
+
+<p>Year-over-year analysis compares the same metric across consecutive years. It answers the simplest trend question: did this number go up or down, and by how much?</p>
+
+<p><strong>Two ways to express YoY change:</strong></p>
+
+<div class="formula-box">
+<strong>Dollar change:</strong> Current Year Value - Prior Year Value<br>
+<strong>Percentage change:</strong> (Current Year - Prior Year) / |Prior Year|
+</div>
+
+<p>Both are useful. Dollar change tells you the magnitude: "Revenue increased by $30 billion." Percentage change tells you the rate: "Revenue grew 12.5%." A $30 billion increase means something different for a $250 billion company than for a $50 billion company.</p>
+
+<p><strong>In Excel:</strong> If 2020 revenue is in cell C6 and 2019 revenue is in B6:</p>
+<div class="formula-box">
+Dollar change: =C6-B6<br>
+Percentage change: =(C6-B6)/ABS(B6)
+</div>
+
+<div class="tip">
+<strong>Why ABS() in the denominator?</strong> If the prior year value is negative (like a net loss), dividing by a negative number would flip the sign of your percentage. Using the absolute value keeps the direction correct.
+</div>
+</section>
+
+<section aria-label="Compound Annual Growth Rate">
+<h2>2. Compound Annual Growth Rate (CAGR)</h2>
+
+<p>CAGR smooths out year-to-year fluctuations to show the average annual growth rate over a period. It answers: "If this metric had grown at a perfectly steady rate from the start to the end, what would that rate have been?"</p>
+
+<div class="formula-box">
+<strong>CAGR = (End Value / Start Value) ^ (1/n) - 1</strong><br><br>
+where n = the number of years between start and end
+</div>
+
+<p><strong>Example:</strong> A company's revenue grew from $100M in 2019 to $150M in 2023. That is 4 growth intervals (2019 to 2020, 2020 to 2021, 2021 to 2022, 2022 to 2023), so n = 4.</p>
+<div class="formula-box">
+CAGR = (150 / 100) ^ (1/4) - 1 = 1.5 ^ 0.25 - 1 = 10.7%
+</div>
+
+<p><strong>In Excel:</strong> If the start value is in cell B6 and end value is in F6:</p>
+<div class="formula-box">
+=(F6/B6)^(1/4)-1
+</div>
+
+<h3>When CAGR is useful:</h3>
+<ul>
+    <li>Comparing growth rates across companies of different sizes</li>
+    <li>Summarizing long-term trends in a single number</li>
+    <li>Metrics that grow relatively steadily (like revenue, assets)</li>
+</ul>
+
+<h3>When CAGR is misleading:</h3>
+<ul>
+    <li>When the path between start and end was highly volatile</li>
+    <li>When the start or end year was unusual (an outlier distorts the whole calculation)</li>
+    <li>For metrics that can go negative (CAGR is undefined if the start value is negative)</li>
+</ul>
+
+<div class="tip">
+<strong>Key insight:</strong> CAGR only looks at two data points: the first and the last. It tells you nothing about what happened in between. A company could have lost money for three straight years and still show a positive CAGR if the final year was strong enough.
+</div>
+</section>
+
+<section aria-label="Identifying Anomalies">
+<h2>3. Identifying Anomalies</h2>
+
+<p>An anomaly is a data point that breaks the pattern. Spotting anomalies is one of the most important skills in financial analysis because they often reveal the most interesting stories.</p>
+
+<p><strong>How to spot anomalies:</strong></p>
+<ul>
+    <li><strong>Sudden spikes or drops:</strong> A metric that grew 5-10% per year and then drops 40% demands investigation.</li>
+    <li><strong>Divergence between related metrics:</strong> If revenue grows but net income falls, something changed in costs, taxes, or one-time items.</li>
+    <li><strong>Reversals:</strong> A metric that was trending upward suddenly reverses direction.</li>
+</ul>
+
+<p><strong>What to do when you find one:</strong></p>
+<ol>
+    <li>Name it: "Net income dropped 48% in 2020."</li>
+    <li>Ask why: Was it a one-time event? A structural change? An accounting adjustment?</li>
+    <li>Assess impact: Does this anomaly change the long-term trend, or is it noise?</li>
+</ol>
+
+<p>Common causes of anomalies in public company data include: economic recessions, acquisitions or divestitures, one-time charges (impairments, legal settlements), accounting rule changes, and industry-specific events.</p>
+</section>
+
+<section aria-label="Chart Types and When to Use Them">
+<h2>4. Chart Types and When to Use Them</h2>
+
+<table>
+    <caption>Chart types, their best uses, and examples</caption>
+    <tr>
+        <th scope="col">Chart Type</th>
+        <th scope="col">Best For</th>
+        <th scope="col">Example</th>
+    </tr>
+    <tr>
+        <td><strong>Line chart</strong></td>
+        <td>Showing trends over time for one metric</td>
+        <td>Revenue from 2019 to 2023</td>
+    </tr>
+    <tr>
+        <td><strong>Clustered bar chart</strong></td>
+        <td>Comparing two or more metrics side by side</td>
+        <td>Operating earnings vs. net income by year</td>
+    </tr>
+    <tr>
+        <td><strong>Single bar chart</strong></td>
+        <td>Showing growth rates or comparing values across categories</td>
+        <td>YoY revenue growth percentage by year</td>
+    </tr>
+    <tr>
+        <td><strong>Stacked bar chart</strong></td>
+        <td>Showing composition (parts of a whole)</td>
+        <td>Revenue breakdown by business segment</td>
+    </tr>
+</table>
+</section>
+
+<section aria-label="Creating Charts in Excel">
+<h2>5. Creating Charts in Excel</h2>
+
+<ol>
+    <li><strong>Select your data:</strong> Highlight the cells containing the data you want to chart, including the labels (year headers and metric names).</li>
+    <li><strong>Insert the chart:</strong> Go to the Insert tab and choose your chart type (Line, Bar, etc.).</li>
+    <li><strong>Add a title:</strong> Click the chart title placeholder and type a descriptive title (e.g., "Berkshire Hathaway Total Revenue, 2019-2023").</li>
+    <li><strong>Label your axes:</strong> Click the chart, then use the Chart Elements button (+) to add axis titles. The Y-axis should state the unit (e.g., "$ Millions").</li>
+    <li><strong>Format for readability:</strong> Remove unnecessary gridlines, increase font sizes if small, and use colors that are distinguishable.</li>
+</ol>
+
+<div class="tip">
+<strong>Formatting matters.</strong> A chart that is hard to read is worse than no chart. At minimum, every chart needs: a descriptive title, labeled axes with units, and text large enough to read without squinting.
+</div>
+</section>
+
+</main>
+
+<footer>
+<h3>Further Reading</h3>
+<ul role="list">
+    <li><a href="https://www.investopedia.com/terms/c/cagr.asp" target="_blank" rel="noopener">Investopedia: Compound Annual Growth Rate (CAGR)<span class="sr-only"> (opens in new tab)</span></a></li>
+    <li><a href="https://www.investopedia.com/terms/y/year-over-year.asp" target="_blank" rel="noopener">Investopedia: Year-Over-Year (YOY)<span class="sr-only"> (opens in new tab)</span></a></li>
+    <li><a href="https://support.microsoft.com/en-us/office/create-a-chart-from-start-to-finish-0baf399e-dd61-4e18-8a73-b3fd5d5680c2" target="_blank" rel="noopener">Microsoft: Create a Chart in Excel<span class="sr-only"> (opens in new tab)</span></a></li>
+</ul>
+</footer>
+
+</body>
+</html>
